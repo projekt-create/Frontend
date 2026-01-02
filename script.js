@@ -13,7 +13,7 @@ if(localStorage.getItem('login') !== null){
     telegram.style.display = 'flex';
 }else{
     login.style.display = 'flex';
-    telegram.style.display = 'none';
+    
 }
 
 // Login event
@@ -53,3 +53,59 @@ loginForm.addEventListener('submit', (e) => {
         },1000)
     }
 });
+
+/* =========================
+   WebSocket CHAT
+========================= */
+
+// DOM
+const chatBox = document.querySelector('.chat');
+const messageInput = document.querySelector('#messageInput');
+const sendBtn = document.querySelector('#sendBtn');
+
+// Login name olish
+const user = JSON.parse(localStorage.getItem('login'));
+const userName = user?.name || 'Guest';
+
+// WebSocket ulanish
+const socket = new WebSocket("wss://backend-ucmy.onrender.com");
+
+// Ulandi
+socket.onopen = () => {
+    console.log("✅ WebSocket ulandi");
+};
+
+// Xabar kelganda
+socket.onmessage = (event) => {
+    const data = event.data;
+
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message');
+
+    msgDiv.innerHTML = `
+        <span class="name">${data.split(':')[0]}</span>
+        <p class="message-text">${data.split(':').slice(1).join(':')}</p>
+        <span class="time">${new Date().toLocaleTimeString()}</span>
+    `;
+
+    // agar o‘zi yuborgan bo‘lsa
+    if (data.startsWith(userName + ":")) {
+        msgDiv.classList.add('my-message');
+    }
+
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+};
+
+// Yuborish
+sendBtn.addEventListener('click', sendMessage);
+messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+    if (messageInput.value.trim() === '') return;
+
+    socket.send(`${userName}: ${messageInput.value}`);
+    messageInput.value = '';
+}
