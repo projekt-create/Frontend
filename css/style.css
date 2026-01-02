@@ -1,0 +1,237 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #1e4450;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.login {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: #1e4450;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: auto;
+  height: auto;
+  padding: 30px 20px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.384), 0 0 40px rgba(0, 0, 0, 0.705), 0 0 80px rgba(180, 180, 180, 0.336);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.form h1 {
+  color: #fff;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.form form input {
+  width: 300px;
+  height: 40px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background: #4e4e4e;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+.form form input::-moz-placeholder {
+  color: #fff;
+}
+.form form input::placeholder {
+  color: #fff;
+}
+.form form input:focus {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+.form form button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(22, 22, 22, 0.4392156863);
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+.form form button:hover {
+  background: #161616;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.form form button:active {
+  background: #757575;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-link {
+  color: #fff;
+  margin-top: 10px;
+  font-size: 16px;
+}
+.form-link a {
+  color: #fff;
+}
+
+.telegram {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: #1e4450;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  gap: 20px;
+}
+.telegram h1 {
+  color: #fff;
+  text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.chat {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 20px;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  overflow-y: scroll;
+  padding: 20px;
+}
+.chat::-webkit-scrollbar {
+  width: 10px;
+}
+.chat::-webkit-scrollbar-track {
+  background: #1e4450;
+}
+.chat::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.chat::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 10px;
+}
+.chat .message {
+  width: clamp(150px, 30%, 600px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(80, 80, 80, 0.8352941176);
+  border-radius: 15px;
+  padding: 12px 20px;
+  position: relative;
+}
+.chat .message .name {
+  color: #ffffff;
+  font-size: 16px;
+  position: absolute;
+  top: -5px;
+  left: 5px;
+}
+.chat .message .message-text {
+  color: #fff;
+  font-size: 18px;
+  word-break: break-all;
+}
+.chat .message .time {
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  bottom: -2px;
+  right: 10px;
+}
+.chat .my-message {
+  background: rgba(0, 47, 255, 0.5568627451);
+  position: relative;
+  margin-left: 70%;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.container input {
+  width: 20%;
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background: #4e4e4e;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+.container input::-moz-placeholder {
+  color: #fff;
+}
+.container input::placeholder {
+  color: #fff;
+}
+.container input:focus {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+.container button {
+  width: auto;
+  height: 40px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(22, 22, 22, 0.4392156863);
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+.container button:hover {
+  background: #161616;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.container button:active {
+  background: #757575;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}/*# sourceMappingURL=style.css.map */
