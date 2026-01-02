@@ -8,55 +8,39 @@ const loginPassword = document.querySelector('#password');
 const telegram = document.querySelector('.telegram');
 
 // Check login
-if(localStorage.getItem('login') !== null){
+const savedLogin = localStorage.getItem('login');
+
+if (savedLogin) {
     login.style.display = 'none';
     telegram.style.display = 'flex';
-}else{
+} else {
     login.style.display = 'flex';
-    
+    telegram.style.display = 'none';
 }
+
 
 // Login event
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if(loginName.value.trim() === '' || loginPassword.value.trim() === ''){
+    if (loginName.value.trim() === '' || loginPassword.value.trim() === '') {
         loginName.style.border = '1px solid red';
         loginPassword.style.border = '1px solid red';
-        setTimeout(() => {
-            loginName.style.border = '1px solid hsla(0, 0%, 100%, 0.00)';
-            loginPassword.style.border = '1px solid hsla(0, 0%, 100%, 0.00)';
-        },1000)
-    }else{
-        const loginData = {
-            name: loginName.value.trim(),
-            password: loginPassword.value.trim()
-        };
-        localStorage.setItem('login', JSON.stringify(loginData));
-        loginName.style.border = '1px solid green';
-        loginPassword.style.border = '1px solid green';
-
-        setTimeout(() => {
-            loginName.style.border = '1px solid hsla(0, 0%, 100%, 0.00)';
-            loginPassword.style.border = '1px solid hsla(0, 0%, 100%, 0.00)';
-            loginName.value = '';
-            loginPassword.value = '';
-            login.style.opacity = '1';
-            login.style.transition = 'opacity 1s ease-in-out';
-            setTimeout(() => {
-                login.style.opacity = '0';
-                login.style.transition = 'opacity 1s ease-in-out';
-                setTimeout(() => {
-                    login.style.display = 'none';
-                },1000)
-            },1000)
-        },1000)
+        return;
     }
+
+    const loginData = {
+        name: loginName.value.trim(),
+        password: loginPassword.value.trim()
+    };
+
+    localStorage.setItem('login', JSON.stringify(loginData));
+
+    // LOGIN → TELEGRAM
+    login.style.display = 'none';
+    telegram.style.display = 'flex';
 });
 
-/* =========================
-   WebSocket CHAT
-========================= */
 
 // DOM
 const chatBox = document.querySelector('.chat');
@@ -71,7 +55,7 @@ const userName = user?.name || 'Guest';
 const socket = new WebSocket("wss://backend-ucmy.onrender.com");
 
 // Ulandi
-socket.onopen = () => {
+socket.onopen = () => { 
     console.log("✅ WebSocket ulandi");
 };
 
@@ -79,23 +63,27 @@ socket.onopen = () => {
 socket.onmessage = (event) => {
     const data = event.data;
 
+    const [sender, ...text] = data.split(':');
+    const messageText = text.join(':').trim();
+
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message');
 
-    msgDiv.innerHTML = `
-        <span class="name">${data.split(':')[0]}</span>
-        <p class="message-text">${data.split(':').slice(1).join(':')}</p>
-        <span class="time">${new Date().toLocaleTimeString()}</span>
-    `;
-
-    // agar o‘zi yuborgan bo‘lsa
-    if (data.startsWith(userName + ":")) {
+    // agar o‘zing bo‘lsang
+    if (sender === userName) {
         msgDiv.classList.add('my-message');
     }
+
+    msgDiv.innerHTML = `
+        <span class="name">${sender}</span>
+        <p class="message-text">${messageText}</p>
+        <span class="time">${new Date().toLocaleTimeString()}</span>
+    `;
 
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 };
+
 
 // Yuborish
 sendBtn.addEventListener('click', sendMessage);
