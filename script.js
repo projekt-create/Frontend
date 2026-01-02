@@ -41,7 +41,6 @@ loginForm.addEventListener('submit', (e) => {
     telegram.style.display = 'flex';
 });
 
-
 // DOM
 const chatBox = document.querySelector('.chat');
 const messageInput = document.querySelector('#messageInput');
@@ -56,7 +55,14 @@ const socket = new WebSocket("wss://backend-ucmy.onrender.com");
 
 // Ulandi
 socket.onopen = () => { 
-    console.log("✅ WebSocket ulandi");
+    const joinMessage = `${userName} joined the chat`;
+    socket.send(joinMessage);
+};
+
+// Chiqdi
+socket.onclose = () => {
+    const leaveMessage = `${userName} left the chat`;
+    socket.send(leaveMessage);
 };
 
 // Xabar kelganda
